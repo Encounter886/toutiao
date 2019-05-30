@@ -38,7 +38,7 @@ UserCRUD userCRUD;
 @RequestMapping(value = "/loginByUserName",method = RequestMethod.POST)
 public User userLoginByName(@RequestParam("username") String username,
                             @RequestParam("password")String password){
-
+//此处测试git
               System.out.println("进入controller层loginbyname:");
              User user = userCRUD.LoginByName(username,password);
               if(user==null)
