@@ -163,6 +163,7 @@ public User userLoginByName(@RequestParam("username") String username,
     public User getUser(@PathVariable("id") Integer id) {
     User user = userRepository.findById(id).get();
     System.out.println("进入查询user模块");
+    System.out.println("user:"+user+"-----------");
     return user;
 }
 @GetMapping("/user")

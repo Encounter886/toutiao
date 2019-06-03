@@ -73,13 +73,10 @@ public class ToutiaoApplicationTests {
        List<User> u = this.userRepository.findAll();
        // List<User> u = (List<User>) this.userRepository.findAll();
        // System.out.println("一下是查询的内容"+u);
-        for (User user:u
-             ) {
-            System.out.println("---"+u.get(4));
 
-        }
         System.out.println("-------------------------------");
-        System.out.println("fans: "+u.get(4).getHistories());
+        System.out.println(u.get(0)+"-----------");
+    System.out.println(u.get(0).getFans()+"-----------");
     }
 
 

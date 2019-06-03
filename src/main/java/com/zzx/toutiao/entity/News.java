@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import java.util.Set;
 @Setter
 
 @Entity//jpa实体类和数据表映射
-
+//@Proxy(lazy = true)
 public class News implements Serializable {
 //所发表的新闻，即动态
 @Id//主键
@@ -45,8 +46,8 @@ private String title;//文章标题
   private User user_news;
 
 
-  //comment评论
-  @OneToMany(mappedBy = "news_commment",cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+  //comment评论、、  ,fetch = FetchType.EAGER懒加载
+  @OneToMany(mappedBy = "news_commment",cascade = CascadeType.PERSIST)
   private Set<Comment> comments = new HashSet<>();
 
   @Override
