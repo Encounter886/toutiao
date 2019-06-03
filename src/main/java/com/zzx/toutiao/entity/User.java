@@ -16,7 +16,7 @@ import java.util.Set;
  *
  */
 @Getter @Setter @ToString
-@Proxy(lazy = true)//,懒加载
+//@Proxy(lazy = true)//,懒加载
 @Entity//jpa实体类和数据表映射
 //@Table(name="tb_user")//指定和哪个表对应，省略就采用默认user
 
@@ -48,8 +48,8 @@ public class User  {
     private  String birthday;//生日
 
     //fans粉丝  ,fetch = FetchType.LAZY  测试懒加载
-    //@ToString.Exclude  可以避免被打印出来
     // @JsonIgnore  可以避免被序列化，返回的json就没有这个属性
+    //@ToString.Exclude  //可以避免被打印出来
     @OneToMany(mappedBy = "user",cascade = CascadeType.PERSIST)
     private Set<Fans> fans = new HashSet<>();
 

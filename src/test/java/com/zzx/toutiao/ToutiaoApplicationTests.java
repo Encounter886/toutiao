@@ -19,6 +19,7 @@ public class ToutiaoApplicationTests {
 
     @Autowired
     UserRepository userRepository;
+
     @Test
     public void contextLoads() {
     }
@@ -79,5 +80,14 @@ public class ToutiaoApplicationTests {
     System.out.println(u.get(0).getFans()+"-----------");
     }
 
+
+    @Transactional
+     @Test
+    public  void testSelectOne(){
+      User user = this.userRepository.findById(1).get();
+
+   // System.out.println("查询出来的user"+user);
+        System.out.println("run over");
+}
 
 }
