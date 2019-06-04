@@ -18,7 +18,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
-@Transactional
+//@Transactional
 @RestController
 @CrossOrigin
 public class UserController {
@@ -161,9 +161,11 @@ public User userLoginByName(@RequestParam("username") String username,
 
 @GetMapping("/user/{id}")
     public User getUser(@PathVariable("id") Integer id) {
-    User user = userRepository.findById(id).get();
-    System.out.println("进入查询user模块");
-    System.out.println("user:"+user+"-----------");
+
+    User user = userRepository.findById(1).get();
+    System.out.println("进入查询user模块");//事实上懒加载是成功的只不过打印和返回序列化就自动get了
+   //进入生产环境要把sout的语句注释掉
+   // System.out.println("user:"+user+"-----------");
     return user;
 }
 @GetMapping("/user")
