@@ -9,7 +9,9 @@ import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,7 +23,7 @@ import java.util.Set;
 //@Table(name="tb_user")//指定和哪个表对应，省略就采用默认user
 //@JsonIgnoreProperties(value = {"fans","visitors"})//需要一一列出需要忽略转json的属性，
 // 还是在属性上面添加好一点
-public class User  implements Serializable{
+public class User  {
     @Id//主键
     @GeneratedValue(strategy = GenerationType.IDENTITY)//自增主键
     private Integer id;

@@ -1,10 +1,7 @@
 package com.zzx.toutiao.controller;
 
 
-import com.zzx.toutiao.entity.Comment;
-import com.zzx.toutiao.entity.History;
-import com.zzx.toutiao.entity.News;
-import com.zzx.toutiao.entity.User;
+import com.zzx.toutiao.entity.*;
 import com.zzx.toutiao.repository.NewsRepository;
 import com.zzx.toutiao.repository.UserRepository;
 import com.zzx.toutiao.service.UserCRUD;
@@ -13,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -45,6 +43,8 @@ public User userLoginByName(@RequestParam("username") String username,
               return null;
               else
                   return user;
+
+
 }
 
 
@@ -124,11 +124,14 @@ public User userLoginByName(@RequestParam("username") String username,
 
 
     @PostMapping("/search_history")//个人搜索历史
-    public Set<String> searchHistory(@RequestParam("id")Integer user_id){
-          Set<String> searchs =  userCRUD.findSearchHistory(user_id);
+    public Rsponse searchHistory(@RequestParam("id")String user_id){
+        Integer idu = Integer.valueOf(user_id);
+        Set<String> searchs =  userCRUD.findSearchHistory(idu);
 
+        Rsponse rsponse =new Rsponse();
+        rsponse.setStringSet(searchs);
         System.out.println("查询出来的历史搜索为"+searchs);
-        return searchs;
+        return rsponse;
     }
 
     @PostMapping("/myCollection")//个人收藏，通过id列表获得收藏新闻列表

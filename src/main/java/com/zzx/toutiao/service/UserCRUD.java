@@ -95,10 +95,10 @@ public class UserCRUD {
     public  Set<String> findSearchHistory(Integer id){
 
         User user= userRepository.findById(id).get();
-       Set<SearchHistory>  searchHistorys =  user.getSearchHistories();
+        Set<SearchHistory>  searchHistorys =  user.getSearchHistories();
        if(searchHistorys == null)
         return null;
-       Set<String> searchs = new HashSet<>();
+        Set<String> searchs = new HashSet<>();
         for (SearchHistory s:searchHistorys
              ) {
             searchs.add(s.getSearch_cache());
