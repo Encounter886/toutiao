@@ -82,7 +82,7 @@ public User userLoginByName(@RequestParam("username") String username,
          if (users==null)
         return null;
         System.out.println("查询访客记录："+users);
-        //此处注意逻辑关系
+        //此处注意逻辑关系 11
         Rsponse<List<User>> rsponse = new Rsponse<List<User>>();
         rsponse.setList(users);
         rsponse.setCode(200);
