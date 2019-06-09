@@ -1,16 +1,20 @@
 package com.zzx.toutiao.controller;
 
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.zzx.toutiao.entity.*;
 import com.zzx.toutiao.repository.NewsRepository;
 import com.zzx.toutiao.repository.UserRepository;
 import com.zzx.toutiao.service.UserCRUD;
-import javafx.print.Collation;
+
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.spring.web.json.Json;
+
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -72,13 +76,17 @@ public User userLoginByName(@RequestParam("username") String username,
     }
 
     @PostMapping("/visitor_list")//访客记录
-    public List<User> visitorList(@RequestParam("id")Integer user_id){
+    public Rsponse visitorList(@RequestParam("id")Integer user_id){
         System.out.println("进入查询访客记录模块");
          List<User> users = userCRUD.findVisitorList(user_id);
          if (users==null)
         return null;
         System.out.println("查询访客记录："+users);
-         return users;
+        Rsponse<List<User>> rsponse = new Rsponse<List<User>>();
+        rsponse.setList(users);
+        rsponse.setCode(200);
+        System.out.println(rsponse);
+        return rsponse ;
     }
 
     /**
@@ -87,7 +95,7 @@ public User userLoginByName(@RequestParam("username") String username,
      * @return
      */
     @PostMapping("/fans_list")//粉丝列表
-    public List<User>fansList(@RequestParam("id")Integer user_id){
+    public Rsponse fansList(@RequestParam("id")Integer user_id){
 
         System.out.println("进入查询粉丝列表模块");
         List<User> users = userCRUD.findFans(user_id);
@@ -95,61 +103,85 @@ public User userLoginByName(@RequestParam("username") String username,
         if (users==null)
             return null;
         System.out.println("查询粉丝记录："+users);
-        return users;
+
+        Rsponse<List<User>> rsponse = new Rsponse<List<User>>();
+        rsponse.setList(users);
+        rsponse.setCode(200);
+        System.out.println(rsponse);
+        return rsponse;
     }
 
     @PostMapping("/article_list")//所有新闻列表,抓取服务器列表
-    public List<News> articleListAll(){
+    public Rsponse articleListAll(){
         System.out.println("进入抓取所有新闻接口");
 
         List<News> news =  newsRepository.findAll();
         if(news==null)
         return null;
         System.out.println("查询的新闻列表为："+news);
-        return news;
+        Rsponse<List<News>> rsponse = new Rsponse<List<News>>();
+        rsponse.setList(news);
+        rsponse.setCode(200);
+        System.out.println(rsponse);
+        return rsponse;
     }
 
     @PostMapping("/article_listPerson")//个人所发表的新闻列表
-    public Set<News> articleListByUser(@RequestParam("id") Integer user_id){
+    public Rsponse articleListByUser(@RequestParam("id") Integer user_id){
          if(user_id ==null)
         return null;
         System.out.println("进入个人发表新闻列表"+user_id);
         Set<News> news = userCRUD.findNewsById(user_id);
         if(news ==null)
         return null;
+
         System.out.println("查询出个人新闻列表为"+news);
-        return news;
-    }
+        Rsponse<Set<News>> rsponse = new Rsponse<Set<News>>();
+        rsponse.setList(news);
+        rsponse.setCode(200);
+        System.out.println(rsponse);
+        return rsponse;
+}
 
 
 
-    @PostMapping("/search_history")//个人搜索历史
+    @PostMapping("/search_history")//个人搜索历史  //传出去json数组
     public Rsponse searchHistory(@RequestParam("id")String user_id){
         Integer idu = Integer.valueOf(user_id);
         Set<String> searchs =  userCRUD.findSearchHistory(idu);
 
-        Rsponse rsponse =new Rsponse();
-        rsponse.setStringSet(searchs);
         System.out.println("查询出来的历史搜索为"+searchs);
-        return rsponse;
+        Rsponse<Set<String>> rsponse = new Rsponse<Set<String>>();
+        rsponse.setList(searchs);
+        rsponse.setCode(200);
+        System.out.println(rsponse);
+        return rsponse ;
     }
 
     @PostMapping("/myCollection")//个人收藏，通过id列表获得收藏新闻列表
-    public Set<News> collectionList(@RequestParam("id")Integer user_id){
+    public Rsponse collectionList(@RequestParam("id")Integer user_id){
         Set<News> news = userCRUD.findNewsCollection(user_id);
         if(news == null)
             return null;
         System.out.println("查询出来的个人收藏为"+news);
-        return  news;
+        Rsponse<Set<News>> rsponse = new Rsponse<Set<News>>();
+        rsponse.setList(news);
+        rsponse.setCode(200);
+        System.out.println(rsponse);
+        return rsponse ;
     }
 
     @PostMapping("/scan_history")//个人浏览历史
-    public Set<News> scanHistory(@RequestParam("id")Integer user_id){
+    public Rsponse scanHistory(@RequestParam("id")Integer user_id){
         Set<News> news = userCRUD.findNewsHistory(user_id);
          if(news == null)
         return null;
         System.out.println("查询出来的个人浏览历史为"+news);
-         return  news;
+        Rsponse<Set<News>> rsponse = new Rsponse<Set<News>>();
+        rsponse.setList(news);
+        rsponse.setCode(200);
+        System.out.println(rsponse);
+        return rsponse ;
     }
 
     @PostMapping("/updataPersonInformation")//个人浏览历史
